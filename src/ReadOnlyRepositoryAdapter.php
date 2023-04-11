@@ -85,6 +85,18 @@ class ReadOnlyRepositoryAdapter implements RepositoryInterface
     }
     
     /**
+     * Returns the number of items using the specified where parameters.
+     *
+     * @param array $where
+     * @return int
+     * @throws RepositoryReadException
+     */
+    public function count(array $where = []): int
+    {
+        return $this->repository->count(where: $where);
+    }
+    
+    /**
      * Create an entity.
      *
      * @param array $attributes

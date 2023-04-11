@@ -98,6 +98,15 @@ interface ReadRepositoryInterface
      * @throws RepositoryReadException
      */
     public function findAll(array $where = [], array $orderBy = [], null|int|array $limit = null): iterable;
+    
+    /**
+     * Returns the number of items using the specified where parameters.
+     *
+     * @param array $where
+     * @return int
+     * @throws RepositoryReadException
+     */
+    public function count(array $where = []): int;
 }
 ```
 

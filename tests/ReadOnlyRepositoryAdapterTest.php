@@ -77,6 +77,17 @@ class ReadOnlyRepositoryAdapterTest extends TestCase
         $this->assertSame(3, count($entities));
     }
     
+    public function testCountMethod()
+    {
+        $repository = new Mock\ProductRepository();
+        
+        $readOnlyRepository = new ReadOnlyRepositoryAdapter(
+            repository: $repository,
+        );
+        
+        $this->assertSame(3, $readOnlyRepository->count());
+    }
+    
     public function testCreateMethodThrowsCreateException()
     {
         $this->expectException(RepositoryCreateException::class);

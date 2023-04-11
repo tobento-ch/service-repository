@@ -181,6 +181,33 @@ class EventsRepositoryAdapterTest extends TestCase
         $entities = $eventsRepository->findAll();
     }
     
+    public function testCountMethod()
+    {
+        $repository = new Mock\ProductReadRepository();
+        
+        $collection = new Collection();
+        $events = new Events();
+        
+        $eventsRepository = new EventsRepositoryAdapter(
+            eventDispatcher: $events,
+            repository: $repository,
+        );
+        
+        $this->assertSame(3, $eventsRepository->count());
+    }
+    
+    public function testCountMethodThrowsRepositoryReadExceptionIfUnsupportedRepository()
+    {
+        $this->expectException(RepositoryReadException::class);
+        
+        $eventsRepository = new EventsRepositoryAdapter(
+            eventDispatcher: new Events(),
+            repository: new Mock\ProductWriteRepository(),
+        );
+        
+        $eventsRepository->count();
+    }
+    
     public function testCreateMethod()
     {
         $repository = new Mock\ProductWriteRepository();
