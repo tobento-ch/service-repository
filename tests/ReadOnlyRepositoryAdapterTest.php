@@ -77,6 +77,19 @@ class ReadOnlyRepositoryAdapterTest extends TestCase
         $this->assertSame(3, count($entities));
     }
     
+    public function testFindColumnMethod()
+    {
+        $repository = new Mock\ProductRepository();
+        
+        $readOnlyRepository = new ReadOnlyRepositoryAdapter(
+            repository: $repository,
+        );
+        
+        $values = $readOnlyRepository->findColumn('id');
+        
+        $this->assertSame(3, count($values));
+    }
+    
     public function testCountMethod()
     {
         $repository = new Mock\ProductRepository();
