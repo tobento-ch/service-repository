@@ -100,6 +100,25 @@ interface ReadRepositoryInterface
     public function findAll(array $where = [], array $orderBy = [], null|int|array $limit = null): iterable;
     
     /**
+     * Returns the found column values using the specified parameters.
+     *
+     * @param string $column The column name for the values.
+     * @param null|string $key The column name for the index key.
+     * @param array $where Usually where parameters.
+     * @param array $orderBy The order by parameters.
+     * @param null|int|array $limit The limit e.g. 5 or [5(number), 10(offset)].
+     * @return array
+     * @throws RepositoryReadException
+     */
+    public function findColumn(
+        string $column,
+        null|string $key = null,
+        array $where = [],
+        array $orderBy = [],
+        null|int|array $limit = null
+    ): array;
+    
+    /**
      * Returns the number of items using the specified where parameters.
      *
      * @param array $where
