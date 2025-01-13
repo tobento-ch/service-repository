@@ -23,8 +23,8 @@ class Retrieved
     /**
      * Create a new Retrieved event.
      *
-     * @param null|object $entity The entity to update.
-     * @param null|iterable $entities The entities to update.
+     * @param null|object $entity The entity.
+     * @param null|iterable $entities The entities.
      * @param ReadRepositoryInterface $repository
      */
     public function __construct(
