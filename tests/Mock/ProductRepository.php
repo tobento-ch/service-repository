@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Tobento\Service\Repository\Test\Mock;
 
+use Tobento\Service\Repository\HasLocales;
+use Tobento\Service\Repository\LocalesAware;
 use Tobento\Service\Repository\RepositoryInterface;
 
 /**
@@ -22,6 +24,7 @@ class ProductRepository implements RepositoryInterface
 {
     use ProductReadMethods;
     use ProductWriteMethods;
+    use HasLocales;
     
     protected array $products = [];
     
