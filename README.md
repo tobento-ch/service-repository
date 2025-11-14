@@ -12,6 +12,7 @@ Repository interfaces for PHP applications.
         - [Repository Interface](#repository-interface)
         - [Read Repository Interface](#read-repository-interface)
         - [Write Repository Interface](#write-repository-interface)
+        - [Locales Aware Interface](#locales-aware-interface)
         - [Entity Factory Interface](#entity-factory-interface)
     - [Read Only Repository Adapter](#read-only-repository-adapter)
     - [Events Repository Adapter](#events-repository-adapter)
@@ -182,6 +183,99 @@ interface WriteRepositoryInterface
      * @throws RepositoryDeleteException
      */
     public function delete(array $where): iterable;
+}
+```
+
+### Locales Aware Interface
+
+You may implement the locales aware interface into your repository using the ```HasLocales``` trait.
+
+```php
+use Tobento\Service\Repository\HasLocales;
+use Tobento\Service\Repository\LocalesAware;
+use Tobento\Service\Repository\RepositoryInterface;
+
+class SomeRepository implements RepositoryInterface, LocalesAware
+{
+    use HasLocales;
+    
+    // ...
+}
+```
+
+```php
+namespace Tobento\Service\Repository;
+
+interface LocalesAware
+{
+    /**
+     * Sets the locale.
+     *
+     * @param string $locale
+     * @return static $this
+     */
+    public function locale(string $locale): static;
+    
+    /**
+     * Sets the locale returing a new instance.
+     *
+     * @param string $locale
+     * @return static
+     */
+    public function withLocale(string $locale): static;
+    
+    /**
+     * Returns the locale.
+     *
+     * @return string
+     */
+    public function getLocale(): string;
+    
+    /**
+     * Sets the locales.
+     *
+     * @param string ...$locales
+     * @return static $this
+     */
+    public function locales(string ...$locales): static;
+    
+    /**
+     * Sets the locales returning a new instance.
+     *
+     * @param string ...$locales
+     * @return static
+     */
+    public function withLocales(string ...$locales): static;
+    
+    /**
+     * Returns the locales.
+     *
+     * @return array
+     */
+    public function getLocales(): array;
+    
+    /**
+     * Sets the locale fallbacks.
+     *
+     * @param array<string, string> $localeFallbacks
+     * @return static $this
+     */
+    public function localeFallbacks(array $localeFallbacks): static;
+    
+    /**
+     * Sets the locale fallbacks returning a new instance.
+     *
+     * @param array<string, string> $localeFallbacks
+     * @return static
+     */
+    public function withLocaleFallbacks(array $localeFallbacks): static;
+    
+    /**
+     * Returns the locale fallbacks.
+     *
+     * @return array<string, string>
+     */
+    public function getLocaleFallbacks(): array;
 }
 ```
 
