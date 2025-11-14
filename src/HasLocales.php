@@ -51,7 +51,7 @@ trait HasLocales
     public function withLocale(string $locale): static
     {
         $new = clone $this;
-        $new->locale = $locale;
+        $new->locale($locale);
         return $new;
     }
     
@@ -86,7 +86,7 @@ trait HasLocales
     public function withLocales(string ...$locales): static
     {
         $new = clone $this;
-        $new->locales = $locales;
+        $new->locales(...$locales);
         return $new;
     }
     
@@ -121,7 +121,7 @@ trait HasLocales
     public function withLocaleFallbacks(array $localeFallbacks): static
     {
         $new = clone $this;
-        $new->localeFallbacks = $localeFallbacks;
+        $new->localeFallbacks($localeFallbacks);
         return $new;
     }
     
