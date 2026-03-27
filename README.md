@@ -14,6 +14,7 @@ Repository interfaces for PHP applications.
         - [Write Repository Interface](#write-repository-interface)
         - [Locales Aware Interface](#locales-aware-interface)
         - [Entity Factory Interface](#entity-factory-interface)
+    - [Null Repository](#null-repository)
     - [Read Only Repository Adapter](#read-only-repository-adapter)
     - [Events Repository Adapter](#events-repository-adapter)
         - [Eventer](#eventer)
@@ -295,6 +296,72 @@ interface EntityFactoryInterface
     public function createEntityFromArray(array $attributes): object;
 }
 ```
+
+## Null Repository
+
+The `NullRepository` is a no-operation implementation of `RepositoryInterface`.  
+It accepts all read and write operations without performing any side effects and returns neutral, predictable values.
+
+This makes it useful for:
+
+- disabling persistence in development or testing environments  
+- providing a safe fallback when no repository is configured  
+- stubbing repository dependencies in prototypes  
+- avoiding conditional logic (`if ($repo) { ... }`)  
+- ensuring repository calls never throw or mutate state  
+
+### Features
+
+- Implements the full `RepositoryInterface`
+- All read operations return neutral values:
+  - `null` for single-entity lookups
+  - empty arrays/iterables for multi-entity queries
+  - `0` for counts
+- All write operations return simple objects based on the provided attributes
+- No exceptions are thrown
+- No state is stored and no side effects occur
+
+### Returned Values Overview
+
+| Method | Return Value |
+|--------|--------------|
+| `findById()` | `null` |
+| `findByIds()` | `[]` |
+| `findOne()` | `null` |
+| `findAll()` | `[]` |
+| `findColumn()` | `[]` |
+| `count()` | `0` |
+| `create()` | `(object)$attributes` |
+| `updateById()` | `(object)$attributes` |
+| `update()` | `[]` |
+| `deleteById()` | `(object)['id' => $id]` |
+| `delete()` | `[]` |
+
+### Example
+
+```php
+use Tobento\Service\Repository\NullRepository;
+
+$repo = new NullRepository();
+
+// Always returns null
+$user = $repo->findById(1);
+
+// Always returns empty iterable
+$users = $repo->findAll(['active' => true]);
+
+// Creates a simple object from attributes
+$entity = $repo->create(['name' => 'Alice']);
+// $entity->name === 'Alice'
+
+// Update returns an object with the provided attributes
+$updated = $repo->updateById(5, ['name' => 'Bob']);
+
+// Delete returns an object containing the id
+$deleted = $repo->deleteById(10);
+// $deleted->id === 10
+```
+
 
 ## Read Only Repository Adapter
 
