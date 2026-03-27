@@ -1,6 +1,6 @@
 {
     "name": "tobento/service-repository",
-    "version": "2.0.2",
+    "version": "2.0.3",
     "type": "library",
     "description": "Repository interfaces for PHP applications.",
     "keywords": [
